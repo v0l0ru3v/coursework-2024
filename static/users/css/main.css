@@ -1,0 +1,39 @@
+header {
+    background-color: rgb(33, 33, 33);
+   
+}
+
+h1 {
+    font-size: 4rem;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 700px;
+    text-align: center;
+}
+
+nav ul {
+    display: flex;
+    justify-content: flex-end;
+    gap: 25px;
+    padding: 20px 0;
+}
+
+nav ul li {
+    color: rgb(255, 255, 255);
+}
+
+nav ul a {
+    color: white;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.wrapper {
+    max-width: 80%;
+    margin: 0 auto;
+    
+}
