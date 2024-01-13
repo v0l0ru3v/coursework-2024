@@ -2,6 +2,10 @@ from django.db import models
 from users import models as umodels
 from django.views.generic import DeleteView
 from django.contrib import admin
+from django.db import models
+from simple_history.models import HistoricalRecords
+from django.db import models
+from django.db.models import Q
  
 class TusksAdmin(admin.ModelAdmin):
     list_filter = ('date', 'title')
@@ -12,12 +16,20 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+class TusksManager(models.Manager):
+    def custom_queryset(self):
+        return self.filter(tags__icontains='Дом')
+
 class Tusks(models.Model):
     title = models.CharField('Название задачи', max_length=50)                        
     tusk_description = models.TextField('Описание задачи', max_length=1500)            
     date = models.DateTimeField('дедлайн')
-    tags = models.ManyToManyField(Tag) 
-                                           
+    tags = models.ManyToManyField(Tag)
+    
+    history = HistoricalRecords()
+
+    objects = TusksManager() 
+
     def __str__(self):
         return f'{self.title}'
     
@@ -54,5 +66,7 @@ class Task_Comment(models.Model):
     class Meta:
         verbose_name = 'Комментарии к задачам',
         verbose_name_plural = 'Комментарии к задачам'
+
+
 
 

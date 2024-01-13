@@ -8,12 +8,11 @@ from django.views.generic import DeleteView
 from .forms import TuskCreateForm, CommentForm 
 from .models import Tusks, User_Tusks, Task_Comment
 from django.shortcuts import render, redirect, get_object_or_404
-
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.views import APIView
-
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import generics
+from django.db.models import Q
 
 class TusksApiPagination(PageNumberPagination):
     page_size = 3
@@ -21,10 +20,9 @@ class TusksApiPagination(PageNumberPagination):
     max_page_size = 10
 
 class TusksAPIView(generics.ListAPIView):
-    queryset = Tusks.objects.all()
+    queryset = Tusks.objects.filter(Q(title__icontains='В') | Q(title__startswith='В'))
     serializer_class = TusksSerializer
     pagination_class = TusksApiPagination
-
 
 class CreateTasks(View):
     template_name = 'create.html'
@@ -66,5 +64,9 @@ def add_comment(request, pk):
     else:
         form = CommentForm()
     return render(request, 'add_comment.html', {'form': form})
+
+
+
+
 
 
