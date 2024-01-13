@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Удаление записи</h1>
+
+<form action="{% url 'task_delete' task.pk %}" method="post">
+    {% csrf_token %}
+    <button class="submit" class="button_link">Delete task</button>
+</form>
+{% endblock %}

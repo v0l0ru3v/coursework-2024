@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<h2>Новости приложения</h2>
+<ul>
+    {% for el in news %}
+        <li>
+            <h3>{{ el.news_title }}</h3>
+            <p>{{ el.text }}</p>
+            <p>Published on {{ el.news_date }}</p>
+        </li>
+    {% empty %}
+        <p>No news available.</p>
+    {% endfor %}
+    </ul>
+{% endblock %}

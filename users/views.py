@@ -1,9 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from users.forms import UserCreationForm
-from django.contrib.auth import login
-from django.contrib.auth import authenticate
-from django.shortcuts import redirect
+from django.contrib.auth import login, authenticate
+from .models import News
 
 class Register(View):
     template_name = 'registration/register.html'
@@ -28,4 +27,9 @@ class Register(View):
             'form': form
         }
         return render(request, self.template_name, context)
-# Create your views here.
+
+class NewsViews(View):
+    template_name = 'news.html'
+    def get(self, request, *args, **kwargs):
+        news = News.objects.all()
+        return render(request, 'news.html', {'news': news})

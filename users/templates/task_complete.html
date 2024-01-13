@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Выполнена задача?</h1>
+
+<form action="{% url 'complete_task' el.pk %}" method="post">
+    {% csrf_token %}
+    <button class="submit" class="button_link">Да, выполнена</button>
+</form>
+{% endblock %}

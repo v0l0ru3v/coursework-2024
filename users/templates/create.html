@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Task creating form</h1>
+    <div class="container">
+        <form method="post" class="row d-flex mb-3 cl" >
+            {% csrf_token %}
+            {{ form1.title }}<br>
+            {{ form1.tusk_description }}<br>
+            {{ form1.date }}<br>
+            {{ form1.tags }}
+            <button type="submit" class="b btn btn-primary">Submit</button>
+            <button type="reset" class="b btn btn-primary">Reset</button>
+        </form>
+    </div>
+    <span> {{ error }} </span>
+        <!-- <input type="text" placeholder="Название задачи">
+        <textarea name="" id="" cols="30" rows="10" placeholder="Описание задачи">
+
+        </textarea>
+        <input type="datetime-local" placeholder="Дедлайн">
+        
+    
+
+{% endblock %}

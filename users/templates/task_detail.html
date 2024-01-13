@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{{ tasks.title }}</h1>
+<p>{{ tasks.tusk_description }}</p>
+<p> {{ tasks.date }} </p>
+<!-- {% if tusks %}
+
+
+{% for el in tusks %}
+<div>
+    <h3>
+        <b>Title:</b> {{el.title}}
+    </h3>
+    <p>
+        <b>Description:</b> {{el.tusk_description}}
+    </p>
+    <p>
+        <b>Deadline for:</b> {{el.date}}
+    </p>
+    <a href="{% url %}"></a>
+</div>
+<hr>
+
+{% endfor %}
+{% else %}
+<p>У вас нет задач</p>
+{% endif %}
+<a href="{% url 'create' %}">создать запись</a> -->
+
+{% endblock %}
