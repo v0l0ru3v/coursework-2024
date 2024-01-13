@@ -45,9 +45,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "debug_toolbar",
+    'rest_framework',
+    'django_filters',
     'users',
     'tusks'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 3,   
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

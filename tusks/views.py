@@ -1,19 +1,29 @@
-from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.pagination import PageNumberPagination
+from .serializers import TusksSerializer
 from django.views import View
-from django.shortcuts import redirect
-from .models import Tusks, User_Tusks,Task_Comment, Tag
-from .forms import TuskCreateForm, CommentForm
 from django.views.generic import DeleteView
-from django.shortcuts import render, get_object_or_404, redirect
+from .forms import TuskCreateForm, CommentForm 
+from .models import Tusks, User_Tusks, Task_Comment
+from django.shortcuts import render, redirect, get_object_or_404
 
-class TasksView(View):
-    template_name = 'tasks_home.html'
-    
-    def get(self, request):
-        username = request.user
-        user_tusks = User_Tusks.objects.filter(user_id__username=username)
-        tusks = Tusks.objects.filter(id__in=[ut.tusks_id.id for ut in user_tusks]).order_by('date')    
-        return render(request, self.template_name, {'tusks': tusks})
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.views import APIView
+
+from rest_framework.pagination import PageNumberPagination
+from rest_framework import generics
+
+class TusksApiPagination(PageNumberPagination):
+    page_size = 3
+    page_size_query_param = 'page_size'
+    max_page_size = 10
+
+class TusksAPIView(generics.ListAPIView):
+    queryset = Tusks.objects.all()
+    serializer_class = TusksSerializer
+    pagination_class = TusksApiPagination
 
 
 class CreateTasks(View):
