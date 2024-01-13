@@ -1,8 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
-from .serializers import TusksSerializer
+from .serializers import TusksSerializer, TusksFilter
 from django.views import View
 from django.views.generic import DeleteView
 from .forms import TuskCreateForm, CommentForm 
@@ -13,6 +13,12 @@ from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import generics
 from django.db.models import Q
+from django_filters.rest_framework import DjangoFilterBackend
+
+# class TusksAPIView(generics.ListAPIView):
+#     serializer_class = TusksSerializer
+#     queryset = Tusks.objects.all()
+    
 
 class TusksApiPagination(PageNumberPagination):
     page_size = 3
@@ -23,6 +29,15 @@ class TusksAPIView(generics.ListAPIView):
     queryset = Tusks.objects.filter(Q(title__icontains='В') | Q(title__startswith='В'))
     serializer_class = TusksSerializer
     pagination_class = TusksApiPagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = TusksFilter
+
+    @action(detail=False, methods=['GET'])
+    def custom_filter(self, request, *args, **kwargs):
+        title_filter = request.query_params.get('title_filter', 'Веб')
+        queryset = Tusks.objects.filter(Q(title__icontains=title_filter))
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 class CreateTasks(View):
     template_name = 'create.html'
